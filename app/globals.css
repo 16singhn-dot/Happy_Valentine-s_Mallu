@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  :root {
+    /* Deep Midnight Blue background */
+    --background: 240 33% 7%;
+    /* Soft Ivory foreground */
+    --foreground: 48 14% 95%;
+    /* Card - slightly lighter midnight */
+    --card: 240 25% 10%;
+    --card-foreground: 48 14% 95%;
+    --popover: 240 25% 10%;
+    --popover-foreground: 48 14% 95%;
+    /* Primary - Warm Gold */
+    --primary: 43 64% 52%;
+    --primary-foreground: 240 33% 7%;
+    /* Secondary - muted midnight */
+    --secondary: 240 20% 14%;
+    --secondary-foreground: 48 14% 95%;
+    /* Muted */
+    --muted: 240 15% 16%;
+    --muted-foreground: 48 10% 65%;
+    /* Accent - warm gold variant */
+    --accent: 43 64% 52%;
+    --accent-foreground: 240 33% 7%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 48 14% 95%;
+    /* Border - subtle gold tint */
+    --border: 43 30% 22%;
+    --input: 240 20% 18%;
+    --ring: 43 64% 52%;
+    --chart-1: 43 64% 52%;
+    --chart-2: 48 14% 95%;
+    --chart-3: 240 25% 30%;
+    --chart-4: 43 40% 40%;
+    --chart-5: 30 60% 50%;
+    --radius: 0.5rem;
+    --sidebar-background: 240 25% 10%;
+    --sidebar-foreground: 48 14% 95%;
+    --sidebar-primary: 43 64% 52%;
+    --sidebar-primary-foreground: 240 33% 7%;
+    --sidebar-accent: 240 20% 14%;
+    --sidebar-accent-foreground: 48 14% 95%;
+    --sidebar-border: 43 30% 22%;
+    --sidebar-ring: 43 64% 52%;
+    /* Custom tokens */
+    --gold: 43 64% 52%;
+    --ivory: 48 14% 95%;
+    --midnight: 240 33% 7%;
+    --midnight-light: 240 25% 12%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom glow utility */
+@layer utilities {
+  .noor-glow {
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.3), 0 0 60px rgba(212, 175, 55, 0.1);
+  }
+  .noor-glow-sm {
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.2), 0 0 30px rgba(212, 175, 55, 0.08);
+  }
+  .noor-glow-lg {
+    box-shadow: 0 0 40px rgba(212, 175, 55, 0.4), 0 0 80px rgba(212, 175, 55, 0.15);
+  }
+  .noor-text-glow {
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.5), 0 0 40px rgba(212, 175, 55, 0.2);
+  }
+  .gold-line {
+    background: linear-gradient(90deg, transparent, #d4af37, transparent);
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a1a;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.3);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 175, 55, 0.5);
+}
