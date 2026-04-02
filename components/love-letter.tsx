@@ -2,31 +2,33 @@
 
 import React, { useState, useRef } from "react"
 import { motion, useInView, AnimatePresence } from "framer-motion"
-import { Heart, Sparkles, Mail } from "lucide-react"
+import { Heart, Sparkles, Mail, ChevronLeft, ChevronRight } from "lucide-react"
 
-// Letter content - you can replace this with your actual letter
-const LETTER_CONTENT = `My Dearest Love,
-
-Every beat of my heart whispers your name, every star in the sky reminds me of your smile. You are the poetry that flows through my veins, the melody that fills my soul, the light that guides me through every darkness.
-
-From the moment our paths crossed, I knew destiny had written our story in the stars. Your eyes hold galaxies I could explore forever, your touch sends electricity through my entire being, and your love makes me believe in miracles.
-
-I cherish every laugh we've shared, every secret we've whispered, every dream we've built together. You see the real me - the me I hide from the world - and you love me anyway. You make me want to be better, to dream bigger, to love deeper.
-
-Thank you for choosing me, for loving me, for being my forever. You are my sunrise and sunset, my calm in the storm, my everything.
-
-Forever yours,
-With all my love 💕`
+// Letter pages - your handwritten letter images
+const LETTER_PAGES = [
+  "/images/vault/pg1.jpeg",
+  "/images/vault/pg2.jpeg",
+  "/images/vault/pg3.jpeg"
+]
 
 export function LoveLetter() {
   const [isEnvelopeOpen, setIsEnvelopeOpen] = useState(false)
   const [showLetter, setShowLetter] = useState(false)
+  const [currentPage, setCurrentPage] = useState(0)
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: "-15% 0px" })
 
   const handleEnvelopeClick = () => {
     setIsEnvelopeOpen(true)
     setTimeout(() => setShowLetter(true), 800)
+  }
+
+  const nextPage = () => {
+    setCurrentPage((prev) => (prev + 1) % LETTER_PAGES.length)
+  }
+
+  const prevPage = () => {
+    setCurrentPage((prev) => (prev - 1 + LETTER_PAGES.length) % LETTER_PAGES.length)
   }
 
   return (
@@ -145,14 +147,14 @@ export function LoveLetter() {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -50, scale: 0.9 }}
                 transition={{ duration: 0.8, type: "spring" }}
-                className="mt-12 mx-auto max-w-2xl"
+                className="mt-12 mx-auto max-w-4xl"
               >
-                {/* Letter Paper */}
+                {/* Letter Pages Container */}
                 <motion.div
                   initial={{ rotateY: 90 }}
                   animate={{ rotateY: 0 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
-                  className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 p-8 md:p-12 rounded-lg shadow-2xl border border-primary/20 relative overflow-hidden"
+                  className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 p-6 md:p-8 rounded-lg shadow-2xl border border-primary/20 relative overflow-hidden"
                 >
                   {/* Decorative elements */}
                   <motion.div
@@ -171,35 +173,64 @@ export function LoveLetter() {
                     <Heart className="w-5 h-5 text-primary" />
                   </motion.div>
 
-                  {/* Letter Text */}
+                  {/* Page Navigation */}
+                  <div className="flex items-center justify-between mb-4">
+                    <motion.button
+                      onClick={prevPage}
+                      disabled={LETTER_PAGES.length <= 1}
+                      className="p-2 rounded-full bg-primary/10 hover:bg-primary/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      <ChevronLeft className="w-5 h-5 text-primary" />
+                    </motion.button>
+
+                    <div className="text-primary/80 font-serif text-sm">
+                      Page {currentPage + 1} of {LETTER_PAGES.length}
+                    </div>
+
+                    <motion.button
+                      onClick={nextPage}
+                      disabled={LETTER_PAGES.length <= 1}
+                      className="p-2 rounded-full bg-primary/10 hover:bg-primary/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      <ChevronRight className="w-5 h-5 text-primary" />
+                    </motion.button>
+                  </div>
+
+                  {/* Letter Image */}
                   <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.8, delay: 0.6 }}
-                    className="font-serif text-foreground leading-relaxed text-base md:text-lg space-y-4"
+                    key={currentPage}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.4 }}
+                    className="relative"
                   >
-                    {LETTER_CONTENT.split('\n\n').map((paragraph, index) => (
-                      <motion.p
-                        key={index}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.8 + index * 0.2 }}
-                        className="text-justify"
-                      >
-                        {paragraph}
-                      </motion.p>
-                    ))}
+                    <img
+                      src={LETTER_PAGES[currentPage]}
+                      alt={`Letter Page ${currentPage + 1}`}
+                      className="w-full h-auto rounded-lg shadow-lg border border-primary/10"
+                      style={{ maxHeight: '70vh', objectFit: 'contain' }}
+                    />
                   </motion.div>
 
-                  {/* Signature flourish */}
-                  <motion.div
-                    initial={{ scaleX: 0 }}
-                    animate={{ scaleX: 1 }}
-                    transition={{ duration: 1, delay: 2, ease: "easeOut" }}
-                    className="mt-8 flex justify-end"
-                  >
-                    <div className="w-32 h-px bg-gradient-to-r from-transparent via-primary to-transparent" />
-                  </motion.div>
+                  {/* Page indicators */}
+                  <div className="flex justify-center mt-4 space-x-2">
+                    {LETTER_PAGES.map((_, index) => (
+                      <motion.button
+                        key={index}
+                        onClick={() => setCurrentPage(index)}
+                        className={`w-2 h-2 rounded-full transition-colors ${
+                          index === currentPage ? 'bg-primary' : 'bg-primary/30'
+                        }`}
+                        whileHover={{ scale: 1.2 }}
+                        whileTap={{ scale: 0.8 }}
+                      />
+                    ))}
+                  </div>
                 </motion.div>
               </motion.div>
             )}
