@@ -10,6 +10,7 @@ import { SectionDivider } from "@/components/section-divider"
 import { MusicAtmosphere } from "@/components/music-atmosphere"
 import { ShayariSection } from "@/components/shayari-section"
 import { FinalHorizonSection } from "@/components/final-horizon-section"
+import { SixMonthVault } from "@/components/six-month-vault"
 import { ClosingSection } from "@/components/closing-section"
 import { giftContents } from "@/lib/gift-data"
 import { usePersistentProgress } from "@/hooks/use-persistent-progress"
@@ -64,10 +65,10 @@ export function DiceDashboard() {
     resetCurrentRoll()
   }, [resetCurrentRoll])
 
-  // Keyboard shortcut to clear journey (hidden command: Ctrl+Alt+C)
+  // Keyboard shortcut to clear journey (hidden command: Ctrl+Alt+C or Ctrl+C)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.altKey && e.key === "c") {
+      if ((e.ctrlKey && e.altKey && e.key === "c") || (e.ctrlKey && e.key === "c")) {
         clearAllProgress()
         window.location.reload()
       }
@@ -291,6 +292,19 @@ export function DiceDashboard() {
           >
             <SectionDivider />
             <FinalHorizonSection litStars={openedGiftIndices.length} />
+          </motion.div>
+        )}
+
+        {/* Six Month Vault Timeline */}
+        {hasRolled && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 1.05 }}
+            className="w-full"
+          >
+            <SectionDivider />
+            <SixMonthVault />
           </motion.div>
         )}
 
