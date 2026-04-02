@@ -11,6 +11,7 @@ import { MusicAtmosphere } from "@/components/music-atmosphere"
 import { ShayariSection } from "@/components/shayari-section"
 import { FinalHorizonSection } from "@/components/final-horizon-section"
 import { SixMonthVault } from "@/components/six-month-vault"
+import { LoveLetter } from "@/components/love-letter"
 import { ClosingSection } from "@/components/closing-section"
 import { giftContents } from "@/lib/gift-data"
 import { usePersistentProgress } from "@/hooks/use-persistent-progress"
@@ -305,6 +306,8 @@ export function DiceDashboard() {
           >
             <SectionDivider />
             <SixMonthVault />
+            <SectionDivider />
+            <LoveLetter />
           </motion.div>
         )}
 
